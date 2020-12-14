@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Sports/title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <%- include ./include/header.ejs %>
+        <h3 style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">
+            Latest Sports News
+        </h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <% for(var i=0; i<data.length; i++) {%>
+                            <div class="media" style="margin-bottom: 15px; box-shadow: 10px 10px 5px grey;">
+                                <img src=<%=d ata[i].urlToImage %> style="width:250px; height:250px;" class="align-self-center mr-3" alt="...">
+                                <div class="media-body">
+                                    <h5 class="mt-0" style="text-shadow: 1px 1px 2px greenyellow;">
+                                        <%= data[i].title %>
+                                    </h5>
+                                    <p>
+                                        <%= data[i].description %>
+                                    </p>
+                                    <p class="mb-0">
+                                        <%= data[i].content %>
+                                    </p>
+                                    <a href=<%=d ata[i].url %> target="_blank"> Click here for more details</a>
+                                    <p class="mb-0"> Published At :
+                                        <%= data[i].publishedAt %>
+                                    </p>
+                                    <p class="mb-0"> Source :
+                                        <%= data[i].source.name %>,
+                                            <%= data[i].author %>
+                                    </p>
+                                </div>
+                            </div>
+                            <%}%>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include ./include/footer.ejs %>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>About Us</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <%- include ./include/header.ejs %>
+        <div class="row">
+            <div class="col-lg-7" style="box-shadow: 10px 10px 5px darkkhaki;">
+                <div id="map-container-google-11" class="z-depth-1-half map-container-6" style="height: 350px; margin: 10px;">
+                    <iframe ttile="Map" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=19.062117883514652%20,%2072.87231445312501+(Mumbai)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen></iframe>
+                </div>
+                <div class="row text-center ">
+                    <div class="col-md-4 ">
+                        <a class="btn-floating blue accent-1 "><i class="fas fa-map-marker-alt "></i></a>
+                        <p>Kurla, Mumbai</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-4 ">
+                <div class="card " style="margin: 10px; box-shadow: 10px 10px 5px darkkhaki; ">
+                    <div class="card-body ">
+                        <div class="form-header blue accent-1 ">
+                            <h3 style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; ">
+                                About US
+                            </h3>
+                        </div>
+
+                        <p style="font-size:22px;text-shadow: 1px 1px 2px gold ">
+                            Update 24x7” is a company which delivers news via Newspaper.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include ./include/footer.ejs %>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js "></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js "></script>
+</body>
+
+</html>

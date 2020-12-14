@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <title>Media Application Admin</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <%- include ./include/header.ejs %>
+            <br><br>
+            <div class="alert alert-success" role="alert">
+                <span>User Name  : <%= user.name %>,  </span>
+                <span>Email : <%= user.email %>  </span>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h5>News List</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped" id="myTable">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Published At</th>
+                                            <th>Edit/Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var i=0; i<data.length; i++) {%>
+                                            <tr>
+                                                <td>
+                                                    <%=data[i].title%>
+                                                </td>
+                                                <td>
+                                                    <%=data[i].description%>
+                                                </td>
+                                                <td>
+                                                    <%=data[i].publishedAt%>
+                                                </td>
+                                                <td>
+                                                    <button data-target="#myModal" id="<%=data[i]._id%>" type="button" class="update btn btn-warning" data-toggle="modal">
+                                        Edit
+                                    </button>
+                                                    <button type="button" class="delete btn btn-danger" id="<%=data[i]._id%>">
+                                        Delete
+                                    </button>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                    </tbody>
+                                </table>
+                                <div class="modal" id="myModal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">User</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <form action="/updateNews" method="POST" id="update_news">
+                                                    <div class="form-group">
+                                                        <label for="id">ID</label>
+                                                        <input type="text" id="update_id" name="id" class="form-control" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="title">Title</label>
+                                                        <input type="text" id="update_title" name="title" class="form-control" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description">Description</label>
+                                                        <input type="text" id="update_description" name="description" class="form-control" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="url">Url</label>
+                                                        <input type="text" id="update_url" name="url" class="form-control" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="urlToImage">Url To Image</label>
+                                                        <input type="text" id="update_urlToImage" name="urlToImage" class="form-control" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="publishedAt">Published At</label>
+                                                        <input type="text" id="update_publishedAt" name="publishedAt" class="form-control" required />
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="submit" id="update_table" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <%- include ./include/footer.ejs %>
+        <script>
+            $(document).ready(function() {
+                $('#myTable').DataTable()
+            });
+            $('.update').click(function() {
+                id = this.id;
+                console.log('id is ' + id)
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/find_by_id',
+                    data: {
+                        id
+                    },
+                    success: function(data) {
+                        $("#update_id").attr("value", data[0]._id)
+                        $("#update_title").attr("value", data[0].title);
+                        $("#update_description").attr("value", data[0].description);
+                        $("#update_url").attr("value", data[0].url);
+                        $("#update_urlToImage").attr("value", data[0].urlToImage);
+                        $("#update_publishedAt").attr("value", data[0].publishedAt);
+                        $('#myModal').modal({
+                            show: true
+                        });
+                    },
+                    error: function() {
+                        alert('No data');
+                    }
+                });
+            });
+
+            $(function() {
+                $('#update_table').on('click', function(e) {
+                    var data = $('#update_news').serialize();
+                    $.ajax({
+                        url: '/admin/updateNews',
+                        type: 'PUT',
+                        data: data,
+                        success: function(data) {
+                            location.reload({
+                                forceGet: true
+                            })
+                        },
+                        error: function(err) {
+                            console.log("#update_table : err : ", err)
+                        }
+                    });
+                    $('#myModal .close').click()
+                });
+            });
+
+            $('.delete').click(function() {
+                var response = confirm("do you want to delete")
+                id = this.id;
+                if (response === true) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/deleteNews',
+                        method: 'delete',
+                        data: {
+                            id
+                        },
+                        success: function(data) {
+                            location.reload({
+                                forceGet: true
+                            })
+                        },
+                        error: function(err) {
+                            alert(err);
+                        }
+                    });
+                } else {
+                    console.log("Cancelled Delete")
+                }
+            });
+        </script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+</body>
+
+</html>

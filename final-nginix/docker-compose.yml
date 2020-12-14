@@ -1,0 +1,32 @@
+version: '1.00'
+services:
+
+    admin:
+        container_name: final-admin
+        image: themultitoolguy/final-admin 
+        restart: always
+        ports:
+          - "9900:9900"
+        networks:
+          - mynetwork
+
+    cust:
+        container_name: final-app
+        image: themultitoolguy/final-app
+        restart: always
+        ports:
+          - "9901:9901"
+        networks:
+          - mynetwork
+
+    reverseproxy:
+        container_name: final-nginx
+        image: themultitoolguy/final-nginx
+        ports:
+          - "80:8080"
+        networks:
+          - mynetwork
+
+networks:
+ mynetwork:
+    driver: bridge
