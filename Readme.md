@@ -1,4 +1,5 @@
 # To run media-apps with docker
+The projec utilizes many intesesting concpts like JWT (Json Web Tokens) buit in node.js and contantarised on docker while being hosted on nginx.
 
 docker pull themultitoolguy/final-app    
 docker pull themultitoolguy/final-admin-app     
